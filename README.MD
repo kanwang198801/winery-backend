@@ -1,5 +1,11 @@
-### node index
+Install
+## npm install
 
-## Kill port
-lsof -PiTCP -sTCP:LISTEN
-kill -9 portID
+Start Server
+## node index
+
+Find running port ID
+## lsof -PiTCP -sTCP:LISTEN
+
+Kill port ID
+## kill -9 portID
