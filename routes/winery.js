@@ -1,13 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const data = require('../data/mockData.json');
-
-const comparePercentage = ((a, b) => {
-    var keyA = a.percentage,
-        keyB = b.percentage;
-    return keyB - keyA;
-});
-
+const { comparePercentage } = require('../utils/functions');
 router.get("/getYearBreakdown/:lotCode", async (req, res) => {
     try {
         const { lotCode } = req.params;
