@@ -2,7 +2,7 @@ Install
 ## npm install
 
 Start Server
-## node index
+## node server
 
 Find running port ID
 ## lsof -PiTCP -sTCP:LISTEN
