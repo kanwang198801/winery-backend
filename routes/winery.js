@@ -1,117 +1,113 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const data = require('../data/mockData.json');
 const { comparePercentage } = require('../utils/functions');
-router.get("/getYearBreakdown/:lotCode", async (req, res) => {
-    try {
-        const { lotCode } = req.params;
-        const searchResult = data.find(item => item.lotCode === lotCode);
+router.get('/getYearBreakdown/:lotCode', async (req, res) => {
+   try {
+      const { lotCode } = req.params;
+      const searchResult = data.find((item) => item.lotCode === lotCode);
 
-        let breakdown = [];
-        let years = [];
-        searchResult.components.sort(comparePercentage).forEach(item => {
-            if (!years.includes(item.year)) {
-                breakdown.push({
-                    percentage: item.percentage,
-                    key: item.year,
-                });
-                years.push(item.year);
-            }
-        });
+      let breakdown = [];
+      let years = [];
+      searchResult.components.sort(comparePercentage).forEach((item) => {
+         if (!years.includes(item.year)) {
+            breakdown.push({
+               percentage: item.percentage,
+               key: item.year,
+            });
+            years.push(item.year);
+         }
+      });
 
-        const response = {
-            breakDownType: "year",
-            breakdown,
-        }
-        res.json(response);
+      const response = {
+         breakDownType: 'year',
+         breakdown,
+      };
+      res.json(response);
+   } catch (err) {
+      console.error(err.message);
+   }
+});
 
-    } catch (err) {
-        console.error(err.message)
-    }
-})
+router.get('/getVarietyBreakdown/:lotCode', async (req, res) => {
+   try {
+      const { lotCode } = req.params;
+      const searchResult = data.find((item) => item.lotCode === lotCode);
 
-router.get("/getVarietyBreakdown/:lotCode", async (req, res) => {
-    try {
-        const { lotCode } = req.params;
-        const searchResult = data.find(item => item.lotCode === lotCode);
+      let breakdown = [];
+      let varieties = [];
+      searchResult.components.forEach((item) => {
+         if (!varieties.includes(item.variety)) {
+            breakdown.push({
+               percentage: item.percentage,
+               key: item.variety,
+            });
+            varieties.push(item.variety);
+         }
+      });
 
-        let breakdown = [];
-        let varieties = [];
-        searchResult.components.forEach(item => {
-            if (!varieties.includes(item.variety)) {
-                breakdown.push({
-                    percentage: item.percentage,
-                    key: item.variety,
-                });
-                varieties.push(item.variety);
-            }
-        });
+      const response = {
+         breakDownType: 'variety',
+         breakdown,
+      };
+      res.json(response);
+   } catch (err) {
+      console.error(err.message);
+   }
+});
 
-        const response = {
-            breakDownType: "variety",
-            breakdown,
-        }
-        res.json(response);
+router.get('/getRegionBreakdown/:lotCode', async (req, res) => {
+   try {
+      const { lotCode } = req.params;
+      const searchResult = data.find((item) => item.lotCode === lotCode);
 
-    } catch (err) {
-        console.error(err.message)
-    }
-})
+      let breakdown = [];
+      let regions = [];
+      searchResult.components.forEach((item) => {
+         if (!regions.includes(item.region)) {
+            breakdown.push({
+               percentage: item.percentage,
+               key: item.region,
+            });
+            regions.push(item.region);
+         }
+      });
 
-router.get("/getRegionBreakdown/:lotCode", async (req, res) => {
-    try {
-        const { lotCode } = req.params;
-        const searchResult = data.find(item => item.lotCode === lotCode);
+      const response = {
+         breakDownType: 'region',
+         breakdown,
+      };
+      res.json(response);
+   } catch (err) {
+      console.error(err.message);
+   }
+});
 
-        let breakdown = [];
-        let regions = [];
-        searchResult.components.forEach(item => {
-            if (!regions.includes(item.region)) {
-                breakdown.push({
-                    percentage: item.percentage,
-                    key: item.region,
-                });
-                regions.push(item.region);
-            }
-        });
+router.get('/getYearAndVarietyBreakdown/:lotCode', async (req, res) => {
+   try {
+      const { lotCode } = req.params;
+      const searchResult = data.find((item) => item.lotCode === lotCode);
 
-        const response = {
-            breakDownType: "region",
-            breakdown,
-        }
-        res.json(response);
+      let breakdown = [];
+      let yearVarieties = [];
+      searchResult.components.forEach((item) => {
+         if (!yearVarieties.includes(`${item.year} ${item.variety}`)) {
+            breakdown.push({
+               percentage: item.percentage,
+               key: `${item.year} ${item.variety}`,
+            });
+            yearVarieties.push(`${item.year} ${item.variety}`);
+         }
+      });
 
-    } catch (err) {
-        console.error(err.message)
-    }
-})
-
-router.get("/getYearAndVarietyBreakdown/:lotCode", async (req, res) => {
-    try {
-        const { lotCode } = req.params;
-        const searchResult = data.find(item => item.lotCode === lotCode);
-
-        let breakdown = [];
-        let yearVarieties = [];
-        searchResult.components.forEach(item => {
-            if (!yearVarieties.includes(`${item.year} ${item.variety}`)) {
-                breakdown.push({
-                    percentage: item.percentage,
-                    key: `${item.year} ${item.variety}`,
-                });
-                yearVarieties.push(`${item.year} ${item.variety}`);
-            }
-        });
-
-        const response = {
-            breakDownType: "year + variety",
-            breakdown,
-        }
-        res.json(response);
-
-    } catch (err) {
-        console.error(err.message)
-    }
-})
+      const response = {
+         breakDownType: 'year + variety',
+         breakdown,
+      };
+      res.json(response);
+   } catch (err) {
+      console.error(err.message);
+   }
+});
 
 module.exports = router;

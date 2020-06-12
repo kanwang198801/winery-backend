@@ -1,7 +1,7 @@
-const comparePercentage = ((a, b) => {
-    var keyA = a.percentage,
-        keyB = b.percentage;
-    return keyB - keyA;
-});
+const comparePercentage = (a, b) => {
+   const keyA = a.percentage,
+      keyB = b.percentage;
+   return keyB - keyA;
+};
 
-module.exports = { comparePercentage }
+module.exports = { comparePercentage };
